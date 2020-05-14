@@ -10,8 +10,6 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-const employees = [];
-
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
@@ -69,11 +67,16 @@ function addMember() {
                 ]
             }
             
-        ]).then(function(data) {
-            let newMember = (data.role, data.name, data.id, data.email, data.info);
-            console.log(newMember);
-            employees.push(newMember);
-            console.log(employees)
+        ]).then(function(data, info) {
+            let newMember;
+            if (data.role === "Engineer") {
+                newMember = new Engineer(data.name, data.id, data.email, info);
+            } else if (data.role === "Manager") {
+                newMember = new Manager(data.name, data.id, data.email, info);
+            } else {
+                newMember = new Intern(data.name, data.id, data.email, info);
+            }
+            console.log(newMember)
         })   
     })
         
