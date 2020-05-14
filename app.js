@@ -10,9 +10,78 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+const employees = [];
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
+
+addMember();
+
+function addMember() {
+    inquirer.prompt([
+        {
+            type: "list",
+            message: "What is team members role",
+            choices: [
+                "Manager",
+                "Engineer",
+                "Intern"
+            ],
+            name: "role"
+        }])
+        .then(function (data) {
+        let info = "";
+        if (data.role === "Engineer") {
+            info = "Github user name"
+        } else if (data.role === "Manager") {
+            info = "office number"
+        } else {
+            info = "school name"
+        }
+        inquirer.prompt([
+            {
+                type: "input",
+                message: "Enter team members name",
+                name: "name"
+            },
+            {
+                type: "input",
+                message: "Enter team members id",
+                name: "id"
+            },
+            {
+                type: "input",
+                message: "Enter team members email address",
+                name: "email"
+            },
+            {
+                type: "input",
+                message: "Enter team members " + info,
+                name: "info"
+            },
+            {
+                type: "list",
+                message: "Would you like to enter a new team member",
+                name: "anotherMember",
+                choices: [
+                    "Yes",
+                    "No"
+                ]
+            }
+            
+        ]).then(function(data) {
+            let newMember = (data.role, data.name, data.id, data.email, data.info);
+            console.log(newMember);
+            employees.push(newMember);
+            console.log(employees)
+        })   
+    })
+        
+}
+
+
+
+
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
