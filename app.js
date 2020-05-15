@@ -12,7 +12,7 @@ const render = require("./lib/htmlRenderer");
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-
+const teamMembers = [];
 addMember();
 
 function addMember() {
@@ -28,63 +28,72 @@ function addMember() {
             name: "role"
         }])
         .then(function (data) {
-        let info = "";
-        let role = data.role
-        if (role === "Engineer") {
-            info = "Github user name"
-        } else if (role === "Manager") {
-            info = "office number"
-        } else {
-            info = "school name"
-        }
-        inquirer.prompt([
-            {
-                type: "input",
-                message: "Enter team members name",
-                name: "name"
-            },
-            {
-                type: "input",
-                message: "Enter team members id",
-                name: "id"
-            },
-            {
-                type: "input",
-                message: "Enter team members email address",
-                name: "email"
-            },
-            {
-                type: "input",
-                message: "Enter team members " + info,
-                name: "info"
-            },
-            {
-                type: "list",
-                message: "Would you like to enter a new team member",
-                name: "anotherMember",
-                choices: [
-                    "Yes",
-                    "No"
-                ]
-            }
-            
-        ]).then(function(data) {
-            let newMember;
+            let info = "";
+            let role = data.role
             if (role === "Engineer") {
-                newMember = new Engineer(data.name, data.id, data.email, data.info);
+                info = "Github user name"
             } else if (role === "Manager") {
-                newMember = new Manager(data.name, data.id, data.email, data.info);
-            } else if (role === "Intern"){
-                newMember = new Intern(data.name, data.id, data.email, data.info);
+                info = "office number"
+            } else {
+                info = "school name"
             }
-            console.log(newMember)
-        })   
-    })
-        
+            inquirer.prompt([
+                {
+                    type: "input",
+                    message: "Enter team members name",
+                    name: "name"
+                },
+                {
+                    type: "input",
+                    message: "Enter team members id",
+                    name: "id"
+                },
+                {
+                    type: "input",
+                    message: "Enter team members email address",
+                    name: "email"
+                },
+                {
+                    type: "input",
+                    message: "Enter team members " + info,
+                    name: "info"
+                },
+                {
+                    type: "list",
+                    message: "Would you like to enter a new team member",
+                    name: "anotherMember",
+                    choices: [
+                        "Yes",
+                        "No"
+                    ]
+                }
+
+            ]).then(function (data) {
+                let newMember;
+                if (role === "Engineer") {
+                    newMember = new Engineer(data.name, data.id, data.email, data.info);
+                } else if (role === "Manager") {
+                    newMember = new Manager(data.name, data.id, data.email, data.info);
+                } else if (role === "Intern") {
+                    newMember = new Intern(data.name, data.id, data.email, data.info);
+                }
+
+                
+                
+                if (data.anotherMember === "Yes") {
+                    teamMembers.push(newMember);
+                    addMember();
+                } else if (data.anotherMember === "No") {
+                    teamMembers.push(newMember);
+                    console.log(teamMembers);
+                }
+
+
+            })
+            
+        })
+
 }
-
-
-
 
 
 // After the user has input all employees desired, call the `render` function (required
