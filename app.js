@@ -29,9 +29,10 @@ function addMember() {
         }])
         .then(function (data) {
         let info = "";
-        if (data.role === "Engineer") {
+        let role = data.role
+        if (role === "Engineer") {
             info = "Github user name"
-        } else if (data.role === "Manager") {
+        } else if (role === "Manager") {
             info = "office number"
         } else {
             info = "school name"
@@ -67,14 +68,14 @@ function addMember() {
                 ]
             }
             
-        ]).then(function(data, info) {
+        ]).then(function(data) {
             let newMember;
-            if (data.role === "Engineer") {
-                newMember = new Engineer(data.name, data.id, data.email, info);
-            } else if (data.role === "Manager") {
-                newMember = new Manager(data.name, data.id, data.email, info);
-            } else {
-                newMember = new Intern(data.name, data.id, data.email, info);
+            if (role === "Engineer") {
+                newMember = new Engineer(data.name, data.id, data.email, data.info);
+            } else if (role === "Manager") {
+                newMember = new Manager(data.name, data.id, data.email, data.info);
+            } else if (role === "Intern"){
+                newMember = new Intern(data.name, data.id, data.email, data.info);
             }
             console.log(newMember)
         })   
