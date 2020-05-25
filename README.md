@@ -37,7 +37,7 @@
 
   
 
-![Good Read Me Generator Demo](./Assets/Team_Profile_generator.gif)
+![Team Profile Generator Demo](./Assets/Team_Profile_generator.gif)
 
   ## Technologies
 
